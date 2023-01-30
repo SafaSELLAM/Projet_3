@@ -6,7 +6,6 @@ for (let i = 0; i < works.length; i++){
 
 const card = works[i];
 const gallery = document.querySelector(".gallery");
-console.log(gallery)
 const galleryElement = document.createElement("figure");
 const imageElement = document.createElement("img");
 imageElement.src = card.imageUrl;
@@ -30,7 +29,7 @@ boutonFiltrerAll.addEventListener("click",function(){
         return work.categoryId == 1, 2 , 3;
     });
     console.log(workFilter)
-    document.querySelector("#portfolio").innerHTML="";
+    document.querySelector(".gallery").innerHTML="";
     genererWorks(workFilter);
 
 });
@@ -41,7 +40,7 @@ boutonFiltrerObj.addEventListener("click",function(){
         return work.categoryId == 1;
     });
     console.log(workFilter)
-    document.querySelector("#portfolio").innerHTML="";
+    document.querySelector(".gallery").innerHTML="";
     genererWorks(workFilter);
 });
 const boutonFiltrerApt = document.querySelector(".btn_Apt-filtre");
@@ -51,7 +50,7 @@ boutonFiltrerApt.addEventListener("click",function(){
         return work.categoryId == 2;
     });
     console.log(workFilter)
-    document.querySelector("#portfolio").innerHTML="";
+    document.querySelector(".gallery").innerHTML="";
     genererWorks(workFilter);
 });
 const boutonFiltrerHotel = document.querySelector(".btn_Hotel-filtre");
@@ -61,6 +60,6 @@ boutonFiltrerHotel.addEventListener("click",function(){
         return work.categoryId == 3;
     });
     console.log(workFilter)
-    document.querySelector("#portfolio").innerHTML="";
+    document.querySelector(".gallery").innerHTML="";
     genererWorks(workFilter);
 });
