@@ -29,16 +29,30 @@ time, mark, audio, video {
 	justify-content: center;
 	align-items: center;
 }
+.row_between{
+	display: flex;
+	flex-direction: row;
+	justify-content: space-between;
+}
 .center{
 	display: flex;
 	justify-content: center;
 	align-items: center;
 }
-.column{
+.column_start{
 	display: flex;
 	flex-direction: column;
 	justify-content: center;
 	align-items: flex-start;
+}
+.colorBlack{
+	color: black;
+}
+.backBlack{
+	background-color: black;
+}
+.colorWhite{
+	color: white;
 }
 /* HTML5 display-role reset for older browsers */
 article, aside, details, figcaption, figure,
@@ -64,6 +78,10 @@ table {
 	border-collapse: collapse;
 	border-spacing: 0;
 }
+.hidden{
+	color: transparent;
+	background-color: transparent;
+}
 /** end reset css**/
 body {
 	max-width: 1140px;
@@ -71,10 +89,41 @@ body {
 	font-family: 'Work Sans' ;
 	font-size: 14px;
 }
+.modale_header {
+	width: 100%;
+	margin-bottom: 15px;
+	height: 47px;
+}
+.modale_bouton_header{
+	background-color: white;
+	width: 15%;
+	padding: 8px 10px 10px 8px;
+	border-radius: 60px;
+	margin-left: 20px;
+}
 header {
 	display: flex;
+	flex-direction: column;
 	justify-content: space-between;
-	margin: 50px 0
+	margin-bottom: 50px;
+}
+.modale_modifier{
+	display: flex;
+	flex-direction: row;
+	justify-content: flex-start;
+	margin-bottom: 20px;
+}
+.modale_img{
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+	margin-left: 50px;
+	margin-top: 15px;
+}
+.modale_projet{
+	margin-left: 20px;
+	margin-bottom: 20px;
+
 }
 section {
 	margin: 50px 0

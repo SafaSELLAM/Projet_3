@@ -1,3 +1,5 @@
+
+
 const reponse = await fetch ('http://localhost:5678/api/works');
 const works = await reponse.json();
 
@@ -6,7 +8,6 @@ for (let i = 0; i < works.length; i++){
 
 const card = works[i];
 const gallery = document.querySelector(".gallery");
-console.log(gallery)
 const galleryElement = document.createElement("figure");
 const imageElement = document.createElement("img");
 imageElement.src = card.imageUrl;
@@ -64,3 +65,4 @@ boutonFiltrerHotel.addEventListener("click",function(){
     document.querySelector(".gallery").innerHTML="";
     genererWorks(workFilter);
 });
+
