@@ -79,8 +79,7 @@ table {
 	border-spacing: 0;
 }
 .hidden{
-	color: transparent;
-	background-color: transparent;
+	display: none;
 }
 /** end reset css**/
 body {
@@ -106,6 +105,9 @@ header {
 	flex-direction: column;
 	justify-content: space-between;
 	margin-bottom: 50px;
+}
+.login_header{
+	margin: 50px 0px;;
 }
 .modale_modifier{
 	display: flex;
