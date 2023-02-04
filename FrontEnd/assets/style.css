@@ -78,8 +78,11 @@ table {
 	border-collapse: collapse;
 	border-spacing: 0;
 }
+.header_info{
+	margin-top:50px;
+}
 .hidden{
-	display: none;
+display:none !important;
 }
 /** end reset css**/
 body {
@@ -104,10 +107,14 @@ header {
 	display: flex;
 	flex-direction: column;
 	justify-content: space-between;
-	margin-bottom: 50px;
+	margin-bottom: 50px ;
+}
+#header_info{
+	display: block;
+	margin-top: 62px;
 }
 .login_header{
-	margin: 50px 0px;;
+	margin: 50px 0px;
 }
 .modale_modifier{
 	display: flex;
@@ -168,8 +175,10 @@ nav li {
 	color: black;
 	cursor: pointer;
 }
-.Link_Nav:active{
-	color: black;
+
+
+#logoutBtn{
+	display:none; 
 }
 
 li:hover {
@@ -321,4 +330,7 @@ footer nav ul {
 .form_lien{
 	color: black;
 	text-decoration: underline;
+}
+.logout{
+	display: none;
 }
