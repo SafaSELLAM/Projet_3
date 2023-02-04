@@ -1,12 +1,11 @@
 const reponse = await fetch ('http://localhost:5678/api/works');
 const works = await reponse.json();
 
+//récupération travaux 
  function genererWorks(works){
-for (let i = 0; i < works.length; i++){
+ works.forEach(card=>{
 
-const card = works[i];
 const gallery = document.querySelector(".gallery");
-console.log(gallery)
 const galleryElement = document.createElement("figure");
 const imageElement = document.createElement("img");
 imageElement.src = card.imageUrl;
@@ -14,53 +13,51 @@ imageElement.crossOrigin="anonymous"
 const captionElement = document.createElement("figcaption");
 captionElement.innerText = card.title; 
 
-
 gallery.appendChild(galleryElement);
 galleryElement.appendChild(imageElement);
 galleryElement.appendChild(captionElement);
-
-}
+})
 }
 genererWorks(works);
+//ajout barre de filtres
 
-const boutonFiltrerAll = document.querySelector(".btn_All-filtre");
+const reponse2 = await fetch ('http://localhost:5678/api/categories');
+const category = await reponse2.json();
 
-boutonFiltrerAll.addEventListener("click",function(){
-    const workFilter= works.filter (function (work){
-        return work.categoryId == 1, 2 , 3;
+function genererCategory(category){
+
+    const barreFiltre = document.querySelector(".filtres");
+    const FiltreAll = document.createElement("button");
+    FiltreAll.innerText="Tous";
+    FiltreAll.classList.add("btn_filter");
+    FiltreAll.dataset.id="";
+    barreFiltre.appendChild(FiltreAll);
+
+    category.forEach(element=>{
+
+        const FiltreElement = document.createElement("button");
+        FiltreElement.innerText= element.name;
+        FiltreElement.classList.add("btn_filter");
+        FiltreElement.dataset.id= element.id;
+        barreFiltre.appendChild(FiltreElement)
     });
-    console.log(workFilter)
+    
+    }
+genererCategory(category);
+
+//ajout filtres
+
+const boutonFiltre = document.querySelectorAll(".btn_filter");
+boutonFiltre.forEach(bouton=>bouton.addEventListener("click",event=>{
+   const catId= event.target.dataset.id;
+   if(catId === ""){
+    document.querySelector(".gallery").innerHTML="";
+    genererWorks(works);
+   }else{
+    const workFilter= works.filter (function (work){
+        return work.categoryId == catId;
+    });   
     document.querySelector(".gallery").innerHTML="";
     genererWorks(workFilter);
-
-});
-const boutonFiltrerObj = document.querySelector(".btn_obj-filtre");
-
-boutonFiltrerObj.addEventListener("click",function(){
-    const workFilter= works.filter (function (work){
-        return work.categoryId == 1;
-    });
-    console.log(workFilter)
-    document.querySelector(".gallery").innerHTML="";
-    genererWorks(workFilter);
-});
-const boutonFiltrerApt = document.querySelector(".btn_Apt-filtre");
-
-boutonFiltrerApt.addEventListener("click",function(){
-    const workFilter= works.filter (function (work){
-        return work.categoryId == 2;
-    });
-    console.log(workFilter)
-    document.querySelector(".gallery").innerHTML="";
-    genererWorks(workFilter);
-});
-const boutonFiltrerHotel = document.querySelector(".btn_Hotel-filtre");
-
-boutonFiltrerHotel.addEventListener("click",function(){
-    const workFilter= works.filter (function (work){
-        return work.categoryId == 3;
-    });
-    console.log(workFilter)
-    document.querySelector(".gallery").innerHTML="";
-    genererWorks(workFilter);
-});
+   }
+}))
