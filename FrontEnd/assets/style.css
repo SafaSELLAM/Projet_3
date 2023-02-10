@@ -26,9 +26,11 @@ time, mark, audio, video {
 }
 .row{
 	display: flex;
+	flex-direction: row;
 	justify-content: center;
 	align-items: center;
 }
+
 .row_between{
 	display: flex;
 	flex-direction: row;
@@ -45,6 +47,18 @@ time, mark, audio, video {
 	justify-content: center;
 	align-items: flex-start;
 }
+.column_around{
+display: flex;
+flex-direction: column;
+align-items: center;
+justify-content: space-around
+}
+.column_between{
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: space-between;
+	}
 .colorBlack{
 	color: black;
 }
@@ -53,6 +67,9 @@ time, mark, audio, video {
 }
 .colorWhite{
 	color: white;
+}
+.noDecoration{
+	text-decoration: none;
 }
 /* HTML5 display-role reset for older browsers */
 article, aside, details, figcaption, figure,
@@ -91,17 +108,18 @@ body {
 	font-family: 'Work Sans' ;
 	font-size: 14px;
 }
-.modale_header {
+.login_header {
 	width: 100%;
 	margin-bottom: 15px;
 	height: 47px;
 }
-.modale_bouton_header{
+.login_bouton_header{
 	background-color: white;
 	width: 15%;
 	padding: 8px 10px 10px 8px;
 	border-radius: 60px;
 	margin-left: 20px;
+	cursor: pointer;
 }
 header {
 	display: flex;
@@ -113,23 +131,21 @@ header {
 	display: block;
 	margin-top: 62px;
 }
-.login_header{
-	margin: 50px 0px;
-}
-.modale_modifier{
+
+.login_modifier{
 	display: flex;
 	flex-direction: row;
 	justify-content: flex-start;
 	margin-bottom: 20px;
 }
-.modale_img{
+.login_img{
 	display: flex;
 	flex-direction: row;
 	align-items: center;
 	margin-left: 50px;
 	margin-top: 15px;
 }
-.modale_projet{
+.login_projet{
 	margin-left: 20px;
 	margin-bottom: 20px;
 
@@ -303,6 +319,10 @@ footer nav ul {
 .form_title{
 	margin-bottom: 30px;
 }
+#error_msg{
+	margin-bottom: 20px;
+	color: red;
+}
 .form_Input_container > label{
 	margin-bottom: 10px;
 }
@@ -333,4 +353,52 @@ footer nav ul {
 }
 .logout{
 	display: none;
+}
+/*Modale*/
+#modal{
+position: absolute;
+width: 1140px;
+height: 3500px;
+margin: 0 auto;
+background-color: rgba(0, 0, 0, 0.3);
+}
+.modal_wrapper{
+	width: 550px;
+	height: 700px;
+	background-color: #FFFFFF;
+	margin: 300px auto;
+	
+}
+.modal_title{
+	color: black ;
+	font-size: 24px;
+	font-family:'Work Sans';
+	font-weight: 400;
+}
+.modal_header{
+    width: 90%;
+    height: 70px;
+	margin-top: 25px;
+}
+.icone_cross{
+	display: flex;
+    justify-content: flex-end;
+    width: 100%;
+}
+.link_modal{
+	width: 70%;
+	height: 100px;
+	border-top: 1px solid #B3B3B3;
+	padding-top: 30px;
+	margin-bottom: 40px;
+}
+.add_img{
+	width: 70%;
+	height: 30px;
+	border-radius: 60px;
+	background: #1D6154;
+	cursor: pointer;
+}
+.delete_button{
+	color: #D65353;
 }
