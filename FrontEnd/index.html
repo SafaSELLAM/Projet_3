@@ -10,14 +10,31 @@
 	<meta name="description" content="">
 	<link rel="stylesheet" href="./assets/style.css">
 	<script src="https://kit.fontawesome.com/8c24e7947e.js" crossorigin="anonymous"></script>
-	<script type="module" src="gallery.js"></script>
 </head>
 <body>
+	<aside id="modal" class="modal" aria-hidden="true" role="dialogue" style="display: none;">
+		<div class="modal_wrapper js_modal_stop column_between">
+			<div class="modal_header column_between">
+				<div class="icone_cross">
+			<i class="fa-solid fa-xmark js_modal_close "></i>
+		</div>
+			<h1 class="modal_title">Gallerie photo</h1>
+		</div>
+			<div class="gallery_modal">
+
+			</div>
+			<div class="link_modal column_around">
+			<button class="add_img colorWhite">Ajouter une photo</button>
+			<div class="delete_button">Supprimer la gallerie</div>	
+		</div>		
+		</div>
+	</aside>
 <header>
-    <div class="modale_header row  hidden backBlack">
-		<i class="fa-solid fa-pen-to-square hidden colorWhite"></i>
-		<div class="text_modale_header hidden colorWhite">Mode édition</div>
-		<div class="modale_bouton_header hidden">publier les changements</div>
+	<div id="header_info"></div>
+    <div id="updateHeader" class="login_header row  hidden backBlack">
+		<i class="fa-solid fa-pen-to-square colorWhite"></i>
+		<a href ="#modal" class="js_modal  colorWhite noDecoration">Mode édition</a>
+		<button class="login_bouton_header ">publier les changements</button>
 	</div>
 	<div class="row_between">
 	<h1>Sophie Bluel <span>Architecte d'intérieur</span></h1>
@@ -25,25 +42,27 @@
 		<ul>
 			<li>projets</li>
 			<li>contact</li>
-			<li> <a href="logIn.html" class="Link_Nav">login</a></li>
+			<li> <a href="logIn.html" id="loginBtn" class="Link_Nav">login </a></li>
+			<li id="logoutBtn">logout</li>
 			<li><img src="./assets/icons/instagram.png" alt="Instagram"></li>
 		</ul>
 	</nav>
 </div>
 </header>
 <main>
+
 	<section id="introduction">
 		<figure>
 			<img src="./assets/images/sophie-bluel.png" alt="">
-			<div class="modale_img hidden">
-				<i class="fa-solid fa-pen-to-square hidden colorBlack"></i>
-				<div class="text_modale_img hidden"> modifier</div>
+			<div id="updateImg" class="login_img hidden">
+				<i class="fa-solid fa-pen-to-square  colorBlack"></i>
+				<a href="#modal" class="js_modal noDecoration colorBlack "> modifier</a>
 			</div>
 		</figure>
 		<article>
-			<div class="modale_modifier hidden">
-				<i class="fa-solid fa-pen-to-square hidden colorBlack"></i>
-				<div class="text_modale_modifier hidden"> modifier</div>
+			<div id="updateInfo" class="login_modifier hidden ">
+				<i class="fa-solid fa-pen-to-square  colorBlack"></i>
+				<a href="#modal" class="js_modal noDecoration colorBlack "> modifier</a>
 			</div>
 			<h2>Designer d'espace</h2>
 			<p>Je raconte votre histoire, je valorise vos idées. Je vous accompagne de la conception à la livraison finale du chantier.</p>
@@ -52,18 +71,14 @@
 		</article>
 	</section>
 	<section id="portfolio">
-		<div class="modale_titre_portefolio row">
+		<div class="login_titre_portefolio row">
 		<h2>Mes Projets</h2>
-		<div class="modale_projet row hidden">
-			<i class="fa-solid fa-pen-to-square hidden colorBlack"></i>
-			<div class="text_modale_projet hidden">modifier</div>
+		<div id="updateProject" class="login_projet row hidden">
+			<i class="fa-solid fa-pen-to-square colorBlack"></i>
+			<a href="#modal" class="js_modal noDecoration colorBlack "> modifier</a>
 		</div>
 	</div>
 		<div class="filtres row">
-			<button class="btn_All-filtre">Tous</button>
-			<button class="btn_obj-filtre">Objets</button>
-			<button class="btn_Apt-filtre">Appartements</button>
-			<button class="btn_Hotel-filtre">Hôtels & Restaurants</button>
 		</div>
 		<div class="gallery">
 			
@@ -91,5 +106,7 @@
 		</ul>
 	</nav>
 </footer>
+	<script type="module" src="gallery.js"></script>
+	<script type="module" src="administrator.js"></script>
 </body>
 </html>

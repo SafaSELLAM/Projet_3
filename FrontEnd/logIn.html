@@ -9,11 +9,12 @@
 	<link href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=Work+Sans&display=swap" rel="stylesheet">
 	<meta name="description" content="">
 	<link rel="stylesheet" href="./assets/style.css">
-	<script type="module" src="logIn.js"></script>
+
 </head>
 <body>
-<header class="row_between">
-	<h1>Sophie Bluel <span>Architecte d'inteérieur</span></h1>
+<header>
+	<div class="row_between login_header">
+	<h1>Sophie Bluel <span>Architecte d'intérieur</span></h1>
 	<nav>
 		<ul>
 			<li><a href="index.html" class="Link_Nav">projets</a></li>
@@ -22,20 +23,21 @@
 			<li><img src="./assets/icons/instagram.png" alt="Instagram"></li>
 		</ul>
 	</nav>
+</div>
 </header>
 <main class="LogIn_main center">
     <div class="LogIn_container center">
-        <form action="#" method="post" class="LogIn_form" id="LogIn">
+        <form action="#" method="post" class="LogIn_form" id="LogIn_form">
             <h1 class="form_title center">Log In</h1>
-            <div class="error_msg"></div>
-            <div class="form_Input_container column_start">
+            <span id="error_msg"></span> 
+            <div class="form_Input_container column">
                 <label for="email">Email</label>
-                <input type="email" name="email" id="email" class="form_input" required>
+                <Input type="email" name="email" id="email_login" class="form_input" autofocus>
                 <label for="password">Mot de passe</label>
-                <input type="password" name="password" id="password" class="form_input" required>
+                <Input type="password" name="password" id="password_login" class="form_input" >
             </div>
             <div class="LogIn_button center">
-                <button class="LogIn_button center " type="submit">Se connecter</button>
+                <button class="LogIn_button center " type="submit"> Se connecter </button>
             </div>
             <p class="form_text center">
                 <a href="#" class="form_lien">Mot de passe oublié</a>
@@ -52,5 +54,6 @@
 		</ul>
 	</nav>
 </footer>
+<script src="logIn.js"></script>
 </body>
 </html>
