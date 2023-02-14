@@ -95,16 +95,11 @@ const reponse3 = await fetch ('http://localhost:5678/api/categories');
 const categories = await reponse3.json()
 categories.unshift({ name: "Sélectionnez une option", id: "" });
 
-    let select = document.querySelector("#categories");
+categories.forEach(function(cat) {
+		
+  document.querySelector('#categories').innerHTML += `<option data-cat="${cat.id}">${cat.name}</option>`
 
-    categories.forEach(element=>{
+})
 
-        let  optionElement = document.createElement("option");
-        optionElement.innerText= element.name;
-        optionElement.dataset.id= element.id;
-        select.appendChild(optionElement)
-    });
-
-    
  
 
