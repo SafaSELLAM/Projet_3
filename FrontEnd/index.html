@@ -12,21 +12,53 @@
 	<script src="https://kit.fontawesome.com/8c24e7947e.js" crossorigin="anonymous"></script>
 </head>
 <body>
+	<!-- modal manage works -->
 	<aside id="modal" class="modal" aria-hidden="true" role="dialogue" style="display: none;">
 		<div class="modal_wrapper js_modal_stop column_between">
 			<div class="modal_header column_between">
 				<div class="icone_cross">
 			<i class="fa-solid fa-xmark js_modal_close "></i>
 		</div>
-			<h1 class="modal_title">Gallerie photo</h1>
+			<h3 class="modal_title">Gallerie photo</h1>
 		</div>
-			<div class="gallery_modal">
+			<div id="gallery_modal">
 
 			</div>
 			<div class="link_modal column_around">
-			<button class="add_img colorWhite">Ajouter une photo</button>
+			<button id="openModal2" class="add_img colorWhite">Ajouter une photo</button>
 			<div class="delete_button">Supprimer la gallerie</div>	
 		</div>		
+		</div>
+		<!-- modale ajout photo -->
+		<div id="modal2" class="modal_add_wrapper js_modal_stop" style="display: none;">
+			<div class="modal_header_icone row_between">
+			  <i class="fa-solid fa-arrow-left-long js_back_modal"></i>
+			  <i class="fa-solid fa-xmark js_modal_close"></i>
+			</div>
+			<h3 class="title_add_pics center">Ajout Photo</h3>
+			
+			<form method="POST" class="add_photo_form column" enctype="multipart/form-data">
+			  <label  for="input_add_img"class="btn_add_photo_container column">
+				<i class="fa-regular fa-image icone_add"></i>
+				<span class="btn_add center">+ Ajouter photo</span>
+				<p>jpg, png : 4mo max</p>
+			</label>
+			<input id="input_add_img" type="file" name="image" accept=".jpg,.png" hidden>
+		  
+			  <div class="input_add column_start">
+				<label for="titre">Titre</label>
+				<input type="text" name="titre" id="titre" required>
+				<label for="categories">Catégorie</label>
+				<select name="categories" id="categories" required></select>
+			  </div>
+		  
+			  <div class="btn_validate center">
+				<button type="submit" class="add_pic colorWhite">Valider</button>
+			  </div>
+			</form>
+		  </div>
+		  
+
 		</div>
 	</aside>
 <header>
@@ -78,11 +110,8 @@
 			<a href="#modal" class="js_modal noDecoration colorBlack "> modifier</a>
 		</div>
 	</div>
-		<div class="filtres row">
-		</div>
-		<div class="gallery">
-			
-		</div>
+		<div class="filtres row"></div>
+		<div class="gallery"></div>
 	</section>
 	<section id="contact">
 		<h2>Contact</h2>
