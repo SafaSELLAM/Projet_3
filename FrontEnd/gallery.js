@@ -72,7 +72,7 @@ fetch('http://localhost:5678/api/works')
   let worksElements = document.createElement('div')
   worksElements.classList.add('action_Works_add')
   worksElements.innerHTML= `<button class="action-item hover-action-item"><i class="fa-solid fa-arrows-up-down-left-right"></i></button>
-  <button class="action-item js_trash" data-id=${modal.id}><i class="fa-regular fa-trash-can"></i></button> `
+  <button class="action-item js_trash" data-id=${modal.id} onclick="document.getElementById('deleteModal').style.display='block'"><i class="fa-regular fa-trash-can"></i></button> `
 
   let figacapModal = document.createElement('figcaption');
   imageModal.src=modal.imageUrl;

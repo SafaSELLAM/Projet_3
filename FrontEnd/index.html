@@ -21,9 +21,23 @@
 		</div>
 			<h3 class="modal_title">Gallerie photo</h1>
 		</div>
-			<div id="gallery_modal">
+			<div id="gallery_modal"></div>
 
-			</div>
+			<div id="deleteModal" class="deleteModal">
+				<span onclick="document.getElementById('deleteModal').style.display='none'" class="close" title="Close Modal">&times;</span>
+				<form class="modal-content">
+				  <div class="container">
+					<h1>Supprimer l'image</h1>
+					<p>Etes-vous sûr de vouloir supprimer l'image ?</p>
+			  
+					<div class="clearfix">
+					  <button type="button" class="cancelbtn">Annuler</button>
+					  <button type="button" class="deletebtn">Supprimer</button>
+					</div>
+				  </div>
+				</form>
+			  </div>
+
 			<div class="link_modal column_around">
 			<button id="openModal2" class="add_img colorWhite">Ajouter une photo</button>
 			<div class="delete_button">Supprimer la gallerie</div>	
