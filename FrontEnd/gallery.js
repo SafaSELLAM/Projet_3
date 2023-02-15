@@ -5,8 +5,17 @@ const reponse = await fetch ('http://localhost:5678/api/works');
 const works = await reponse.json();
 
 //récupération travaux 
- function genererWorks(works){
- works.forEach(card=>{
+function get_gallery_data(works){
+  works.forEach(card=>{
+    build_main_gallery(card);
+    if(token && userIsLogin){
+      build_modal_gallery(card);
+    }
+  }); 
+}
+get_gallery_data(works); 
+
+ function build_main_gallery(card){
 
 const gallery = document.querySelector(".gallery");
 const galleryElement = document.createElement("figure");
@@ -19,52 +28,13 @@ captionElement.innerText = card.title;
 gallery.appendChild(galleryElement);
 galleryElement.appendChild(imageElement);
 galleryElement.appendChild(captionElement);
-
-/*if (token && userIsLogin){
-    const galleryModal = document.getElementById('gallery_modal');
-    let figureModal = document.createElement('figure');
-    figureModal.classList.add('works_modal');
-    figureModal.dataset.id=card.id;
-    console.log(figureModal);
-    let imageModal = document.createElement('img');
-    imageModal.classList.add('img_modal');
-
-    let worksElements = document.createElement('div')
-    worksElements.classList.add('action_Works_add')
-    worksElements.innerHTML= `<button class="action-item hover-action-item"><i class="fa-solid fa-arrows-up-down-left-right"></i></button>
-    <button class="action-item js_trash" data-id=${card.id}><i class="fa-regular fa-trash-can"></i></button> `
-
-    let figacapModal = document.createElement('figcaption');
-    imageModal.src=card.imageUrl;
-    imageModal.setAttribute("crossorigin","anonymous");
-    imageModal.alt = card.title;
-    figacapModal.innerHTML=`éditer`;
-    galleryModal.appendChild(figureModal);
-    figureModal.appendChild(imageModal);
-    figureModal.appendChild(worksElements);
-    figureModal.appendChild(figacapModal);
-}*/
-
-});
 }
-genererWorks(works);
 
-fetch('http://localhost:5678/api/works')	
-.then(function(res) 
-{
-	if (res.ok) 
-	{
-	return res.json();
-	}
-})
-    .then(function(modal) {
-      modal.forEach(modal => 
-        {
-
-  if (token && userIsLogin){ const galleryModal = document.getElementById('gallery_modal');
+function build_modal_gallery(card){
+  const galleryModal = document.getElementById('gallery_modal');
   let figureModal = document.createElement('figure');
   figureModal.classList.add('works_modal');
-  figureModal.dataset.id=modal.id;
+  figureModal.dataset.id=card.id;
   console.log(figureModal);
   let imageModal = document.createElement('img');
   imageModal.classList.add('img_modal');
@@ -72,21 +42,18 @@ fetch('http://localhost:5678/api/works')
   let worksElements = document.createElement('div')
   worksElements.classList.add('action_Works_add')
   worksElements.innerHTML= `<button class="action-item hover-action-item"><i class="fa-solid fa-arrows-up-down-left-right"></i></button>
-  <button class="action-item js_trash" data-id=${modal.id} onclick="document.getElementById('deleteModal').style.display='block'"><i class="fa-regular fa-trash-can"></i></button> `
+  <button class="action-item js_trash" data-id=${card.id} onclick="document.getElementById('deleteModal').style.display='block'"><i class="fa-regular fa-trash-can"></i></button> `
 
   let figacapModal = document.createElement('figcaption');
-  imageModal.src=modal.imageUrl;
+  imageModal.src=card.imageUrl;
   imageModal.setAttribute("crossorigin","anonymous");
-  imageModal.alt = modal.title;
+  imageModal.alt = card.title;
   figacapModal.innerHTML=`éditer`;
   galleryModal.appendChild(figureModal);
   figureModal.appendChild(imageModal);
   figureModal.appendChild(worksElements);
   figureModal.appendChild(figacapModal);
-        }
-  })
-
-});
+}
 
 
 //ajout barre de filtres
@@ -122,14 +89,20 @@ boutonFiltre.forEach(bouton=>bouton.addEventListener("click",event=>{
    const catId= event.target.dataset.id;
    if(catId === ""){
     document.querySelector(".gallery").innerHTML="";
-    genererWorks(works);
+    works.forEach(card=>{
+      build_main_gallery(card);
 
+    });
+     
    }else{
     const workFilter= works.filter (function (work){
         return work.categoryId == catId;
     });   
     document.querySelector(".gallery").innerHTML="";
-    genererWorks(workFilter);
+    workFilter.forEach(card=>{
+      build_main_gallery(card);
+    });
+   
    }
 }))
 // suppressions travaux
@@ -166,8 +139,8 @@ addPhoto.addEventListener('submit', (e) => {
   e.preventDefault();
   const formData = new FormData();
   const image = document.querySelector('input[type="file"]').files[0];
-  const title = document.querySelector('input[name="titre"]').textContent;
-  const category = document.querySelector('select[name="categories"]').categoryId;
+  const title = document.getElementById('titre').value;
+  const category = document.getElementById('categories').selectedOptions[0].dataset.cat;
 
   if (image.size > 4 * 1024 * 1024) {
     alert("Le fichier sélectionner est trop volumineux. Veuillez en sélectionner un inférieur à 4Mo.");
@@ -176,7 +149,8 @@ addPhoto.addEventListener('submit', (e) => {
 
   // Convert the image to a Base64-encoded string
   const reader = new FileReader();
-  reader.readAsDataURL(image);
+//  reader.readAsDataURL(image);
+  console.log(reader.readAsDataURL(image))
   reader.onloadend = function() {
     const base64data = reader.result;
 
@@ -187,8 +161,7 @@ addPhoto.addEventListener('submit', (e) => {
 
     fetch('http://localhost:5678/api/works/', {
       method: 'POST',
-      headers: {'Content-Type': 'multipart/form-data', 'Accept': 'application/json', 'Authorization': `Bearer ${token}`},
-      body: JSON.stringify(formData),
+      headers: { 'Authorization': `Bearer ${token}`},
       body: formData,
     })
       .then(function(res) {
