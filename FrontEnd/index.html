@@ -23,21 +23,6 @@
 		</div>
 			<div id="gallery_modal"></div>
 
-			<div id="deleteModal" class="deleteModal">
-				<span onclick="document.getElementById('deleteModal').style.display='none'" class="close" title="Close Modal">&times;</span>
-				<form class="modal-content">
-				  <div class="container">
-					<h1>Supprimer l'image</h1>
-					<p>Etes-vous sûr de vouloir supprimer l'image ?</p>
-			  
-					<div class="clearfix">
-					  <button type="button" class="cancelbtn">Annuler</button>
-					  <button type="button" class="deletebtn">Supprimer</button>
-					</div>
-				  </div>
-				</form>
-			  </div>
-
 			<div class="link_modal column_around">
 			<button id="openModal2" class="add_img colorWhite">Ajouter une photo</button>
 			<div class="delete_button">Supprimer la gallerie</div>	
@@ -52,12 +37,15 @@
 			<h3 class="title_add_pics center">Ajout Photo</h3>
 			
 			<form method="POST" class="add_photo_form column" enctype="multipart/form-data">
-			  <label  for="input_add_img"class="btn_add_photo_container column">
-				<i class="fa-regular fa-image icone_add"></i>
-				<span class="btn_add center">+ Ajouter photo</span>
-				<p>jpg, png : 4mo max</p>
-			</label>
-			<input id="input_add_img" type="file" name="image" accept=".jpg,.png" hidden>
+				<div class="label-container">
+					<label  for="input_add_img"class="btn_add_photo_container column">
+						<i class="fa-regular fa-image icone_add"></i>
+						<span class="btn_add center">+ Ajouter photo</span>
+						<p>jpg, png : 4mo max</p>
+					</label>
+				</div>
+				<div class="img_preview"></div>
+			<input id="input_add_img" type="file" name="image" id="file" accept=".jpg,.png" hidden>
 		  
 			  <div class="input_add column_start">
 				<label for="titre">Titre</label>
