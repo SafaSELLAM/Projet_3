@@ -33,10 +33,7 @@ logout_btn.addEventListener("click", function(){
     localStorage.setItem("userIsLogin",false)
     localStorage.setItem("token","")
 })
-
-
-
-
+  
 //ajout boîte modale
 let modal = null;
 //const galleryModal = document.getElementsByClassName("gallery_modal")[0];
@@ -96,9 +93,12 @@ const categories = await reponse3.json()
 categories.unshift({ name: "Sélectionnez une option", id: "" });
 
 categories.forEach(function(cat) {
-		
-  document.querySelector('#categories').innerHTML += `<option data-cat="${cat.id}">${cat.name}</option>`
+	if (cat.id === ""){
 
+    document.querySelector('#categories').innerHTML += `<option data-cat="${cat.id}" selected = "true" disabled="disabled">${cat.name}</option>`
+  }	else{
+    document.querySelector('#categories').innerHTML += `<option data-cat="${cat.id}">${cat.name}</option>`
+  }
 })
 
  
