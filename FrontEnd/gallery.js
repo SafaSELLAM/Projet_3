@@ -19,6 +19,7 @@ get_gallery_data(works);
 
 const gallery = document.querySelector(".gallery");
 const galleryElement = document.createElement("figure");
+galleryElement.dataset.id= card.id;
 const imageElement = document.createElement("img");
 imageElement.src = card.imageUrl;
 imageElement.crossOrigin="anonymous"
@@ -42,7 +43,7 @@ function build_modal_gallery(card){
   let worksElements = document.createElement('div')
   worksElements.classList.add('action_Works_add')
   worksElements.innerHTML= `<button class="action-item hover-action-item"><i class="fa-solid fa-arrows-up-down-left-right"></i></button>
-  <button class="action-item js_trash" data-id=${card.id} onclick="document.getElementById('deleteModal').style.display='block'"><i class="fa-regular fa-trash-can"></i></button> `
+  <button class="action-item js_trash" data-id=${card.id}><i class="fa-regular fa-trash-can"></i></button> `
 
   let figacapModal = document.createElement('figcaption');
   imageModal.src=card.imageUrl;
@@ -105,32 +106,52 @@ boutonFiltre.forEach(bouton=>bouton.addEventListener("click",event=>{
    
    }
 }))
-// suppressions travaux
+
+//Suppression travaux nouvelle fonction
 
 const deleteElement = document.querySelectorAll('.js_trash');
-deleteElement.forEach( pictureElement => {
-  pictureElement.addEventListener('click', e => {
+deleteElement.forEach((pictureElement) => {
+  pictureElement.addEventListener('click', (e) => {
     e.preventDefault();
     const pictureId = e.currentTarget.dataset.id;
-    deletePicture(pictureId);
+   
+    const pictureElement = document.querySelectorAll(`figure[data-id="${pictureId}"]`);
+    
+    if (confirm('Etes-vous sûr de vouloir supprimer cette image?')) {
+      pictureElement.forEach(element=>{
+        element.remove();
+
+      })
+      deletePicture(pictureId);
+      console.log(deletePicture)
+    }
   });
 });
 
-function deletePicture( pictureId ) {
-  fetch(`http://localhost:5678/api/works/${pictureId }`, {
+function deletePicture(pictureId) {
+  fetch(`http://localhost:5678/api/works/${pictureId}`, {
     method: 'DELETE',
     headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${token}` },
   })
-    .then(response => {
+    .then((response) => {
       if (response.ok) {
-        // remove the picture from the DOM
-        document.getElementById(pictureId).remove();
+        console.log('Image supprimée du serveur.');
+
+        // Supprimer l'élément du DOM
+        const pictureElement = document.querySelectorAll(`figure[data-id="${pictureId}"]`);
+        pictureElement.forEach(element=>{
+          element.remove();
+        })
+
       } else {
-        throw new Error('Failed to delete picture');
+        throw new Error('Echec de la suppression');
       }
     })
-   
+    .catch((error) => {
+      console.error(error);
+    });
 }
+
 
 //ajout images
 
@@ -143,31 +164,78 @@ addPhoto.addEventListener('submit', (e) => {
   const category = document.getElementById('categories').selectedOptions[0].dataset.cat;
 
   if (image.size > 4 * 1024 * 1024) {
-    alert("Le fichier sélectionner est trop volumineux. Veuillez en sélectionner un inférieur à 4Mo.");
+    alert("Le fichier sélectionné est trop volumineux. Veuillez en sélectionner un inférieur à 4Mo.");
     return;
   }
 
   // Convert the image to a Base64-encoded string
   const reader = new FileReader();
-//  reader.readAsDataURL(image);
-  console.log(reader.readAsDataURL(image))
+  reader.readAsDataURL(image);
   reader.onloadend = function() {
-    const base64data = reader.result;
+    //const base64data = reader.result;
+
 
     // Append the Base64-encoded image data to the FormData object
-    formData.append('imageString', base64data);
+    formData.append('image', image);
     formData.append('title', title);
-    formData.append('categoryId', category);
+    formData.append('category', category);
 
     fetch('http://localhost:5678/api/works/', {
       method: 'POST',
-      headers: { 'Authorization': `Bearer ${token}`},
+      headers: {'Authorization':`Bearer ${token}`},
       body: formData,
     })
-      .then(function(res) {
+     .then(function(res) {
         if (res.ok) {
+          console.log('image ajoutée avec succès')
           return res.json();
         }
+      })
+      .then(function(card){
+        if(token && userIsLogin){
+          build_main_gallery(card);
+          build_modal_gallery(card);
+        }
+        
+        document.querySelector('.img_preview').innerHTML='';
+        document.querySelector(".label-container").style.display="block";
+        document.getElementById("modal2").style.display="none";
+        document.querySelector(".modal_wrapper").style.display=null;
+      })
+      .catch(function(error){
+        console.error('Error',error);
       });
   };
 });
+// Ajouter un écouteur d'événement "change" à l'élément input de type "file" 
+const inputAddImg = document.getElementById('input_add_img');
+inputAddImg.addEventListener('change', function() {
+// cacher btn add picture 
+document.querySelector(".label-container").style.display="none";
+
+  const imgPreview = document.querySelector('.img_preview');
+  imgPreview.style.display="flex"
+  const file = this.files[0];
+  const reader = new FileReader();
+
+  // Réinitialiser la div "img_preview"
+  imgPreview.innerHTML = '';
+  
+  reader.onloadend = function() {
+    // Créer un élément "img" et définir sa source en tant que l'image chargée
+    const imgPreviewContainer = document.createElement('div');
+    imgPreviewContainer.classList.add("imgPreviewContainer")
+    const img = document.createElement('img');
+    img.classList.add("imgPreviewStyle")
+    img.src = reader.result;
+
+    // Ajouter l'élément "img" à la div "img_preview"
+    imgPreview.appendChild(imgPreviewContainer);
+    imgPreviewContainer.appendChild(img);
+  }
+
+  if (file) {
+    reader.readAsDataURL(file);
+  }
+});
+    
