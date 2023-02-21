@@ -45,13 +45,14 @@
 					</label>
 				</div>
 				<div class="img_preview"></div>
-			<input id="input_add_img" type="file" name="image" id="file" accept=".jpg,.png" hidden>
+					<label for="input_add_img" id="label_add_img"></label>
+						<input id="input_add_img" type="file" name="image" id="file" accept=".jpg,.png"  hidden >
 		  
 			  <div class="input_add column_start">
 				<label for="titre">Titre</label>
-				<input type="text" name="titre" id="titre" required>
+					<input type="text" name="titre" id="titre" required>
 				<label for="categories">Catégorie</label>
-				<select name="categories" id="categories" required></select>
+					<select name="categories" id="categories" required></select>
 			  </div>
 		  
 			  <div class="btn_validate center">
@@ -65,7 +66,7 @@
 	</aside>
 <header>
 	<div id="header_info"></div>
-    <div id="updateHeader" class="login_header row  hidden backBlack">
+    <div id="updateHeader" class="Main_header row  hidden backBlack">
 		<i class="fa-solid fa-pen-to-square colorWhite"></i>
 		<a href ="#modal" class="js_modal  colorWhite noDecoration">Mode édition</a>
 		<button class="login_bouton_header ">publier les changements</button>
