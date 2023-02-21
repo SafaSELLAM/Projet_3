@@ -36,7 +36,6 @@ function build_modal_gallery(card){
   let figureModal = document.createElement('figure');
   figureModal.classList.add('works_modal');
   figureModal.dataset.id=card.id;
-  console.log(figureModal);
   let imageModal = document.createElement('img');
   imageModal.classList.add('img_modal');
 
@@ -109,24 +108,29 @@ boutonFiltre.forEach(bouton=>bouton.addEventListener("click",event=>{
 
 //Suppression travaux nouvelle fonction
 
-const deleteElement = document.querySelectorAll('.js_trash');
-deleteElement.forEach((pictureElement) => {
-  pictureElement.addEventListener('click', (e) => {
+function init_delete_event(pictureElement){
+  pictureElement.addEventListener('click',(e)=>{
     e.preventDefault();
     const pictureId = e.currentTarget.dataset.id;
-   
-    const pictureElement = document.querySelectorAll(`figure[data-id="${pictureId}"]`);
-    
-    if (confirm('Etes-vous sûr de vouloir supprimer cette image?')) {
-      pictureElement.forEach(element=>{
-        element.remove();
 
-      })
-      deletePicture(pictureId);
-      console.log(deletePicture)
-    }
+    const pictureElement = document.querySelectorAll(`figure[data-id="${pictureId}"]`);
+    if (confirm('Etes-vous sûr de vouloir supprimer cette image?')) {
+            pictureElement.forEach(element=>{
+              element.remove();
+      
+            })
+            deletePicture(pictureId);
+          }
   });
+}
+
+function add_delete_event_on_btn(){
+  const deleteElement = document.querySelectorAll('.js_trash');
+  deleteElement.forEach((pictureElement) => {
+    init_delete_event(pictureElement);
 });
+}
+add_delete_event_on_btn();
 
 function deletePicture(pictureId) {
   fetch(`http://localhost:5678/api/works/${pictureId}`, {
@@ -154,8 +158,12 @@ function deletePicture(pictureId) {
 
 
 //ajout images
-
 const addPhoto = document.querySelector('#modal2');
+const form_add_photo = document.querySelector('.add_photo_form');
+const labelAddImg = document.getElementById("label_add_img");
+labelAddImg.addEventListener("click", function() {
+  document.getElementById("input_add_img").click();
+});
 addPhoto.addEventListener('submit', (e) => {
   e.preventDefault();
   const formData = new FormData();
@@ -163,19 +171,29 @@ addPhoto.addEventListener('submit', (e) => {
   const title = document.getElementById('titre').value;
   const category = document.getElementById('categories').selectedOptions[0].dataset.cat;
 
+  //condition image + catégories présentes
+  const fileInput = document.getElementById("input_add_img");
+  if (fileInput.files.length === 0) {
+    e.preventDefault();
+    alert("Veuillez sélectionner une image.");
+  }
+  if (!category) {
+    alert('Veuillez sélectionner une catégorie.');
+    return;
+  }
+  // condition taille image
   if (image.size > 4 * 1024 * 1024) {
     alert("Le fichier sélectionné est trop volumineux. Veuillez en sélectionner un inférieur à 4Mo.");
     return;
   }
-
+ 
   // Convert the image to a Base64-encoded string
   const reader = new FileReader();
   reader.readAsDataURL(image);
   reader.onloadend = function() {
-    //const base64data = reader.result;
 
 
-    // Append the Base64-encoded image data to the FormData object
+    // Append the image data to the FormData object
     formData.append('image', image);
     formData.append('title', title);
     formData.append('category', category);
@@ -195,9 +213,12 @@ addPhoto.addEventListener('submit', (e) => {
         if(token && userIsLogin){
           build_main_gallery(card);
           build_modal_gallery(card);
+          const pictureElement= document.querySelector('button[data-id="'+card.id+'"]')
+          init_delete_event(pictureElement);
         }
         
         document.querySelector('.img_preview').innerHTML='';
+        form_add_photo.reset();
         document.querySelector(".label-container").style.display="block";
         document.getElementById("modal2").style.display="none";
         document.querySelector(".modal_wrapper").style.display=null;
@@ -207,11 +228,17 @@ addPhoto.addEventListener('submit', (e) => {
       });
   };
 });
+
+//Ajout du preview de l'image ajoutée
 // Ajouter un écouteur d'événement "change" à l'élément input de type "file" 
 const inputAddImg = document.getElementById('input_add_img');
 inputAddImg.addEventListener('change', function() {
-// cacher btn add picture 
+
+// cacher les éléments présent dans la balise label 
 document.querySelector(".label-container").style.display="none";
+
+// ajout couleur de fond bouton valider 
+document.querySelector('.add_pic').style.background = '#1D6154';
 
   const imgPreview = document.querySelector('.img_preview');
   imgPreview.style.display="flex"
@@ -222,7 +249,7 @@ document.querySelector(".label-container").style.display="none";
   imgPreview.innerHTML = '';
   
   reader.onloadend = function() {
-    // Créer un élément "img" et définir sa source en tant que l'image chargée
+    // Créer un élément "img" et définir sa source en tant que l'image chargée ainsi que la div qui la contiendra
     const imgPreviewContainer = document.createElement('div');
     imgPreviewContainer.classList.add("imgPreviewContainer")
     const img = document.createElement('img');
