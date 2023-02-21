@@ -1,7 +1,6 @@
 
 //Elements page administrateur
 const userIsLogin = JSON.parse(localStorage.getItem("userIsLogin"));
-console.log(userIsLogin)
 const logout_btn = document.getElementById("logoutBtn");
 const login_btn = document.getElementById("loginBtn");
 const listUpdateElements = ['updateHeader', 'updateImg', 'updateInfo', 'updateProject']
@@ -12,9 +11,7 @@ if(userIsLogin){
     login_btn.style.display = "none";
     header_info.style.display= "none";
     listUpdateElements.forEach(element => {
-        console.log(element)
         const updateEL = document.getElementById(element);
-        console.log(updateEL)
         updateEL.classList.remove("hidden")
     });
 }else{
