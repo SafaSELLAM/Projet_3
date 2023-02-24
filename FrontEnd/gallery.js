@@ -187,17 +187,19 @@ addPhoto.addEventListener('submit', (e) => {
     return;
   }
  
-  // Convert the image to a Base64-encoded string
+  // Lire le contenu du file en tant qu'URL
   const reader = new FileReader();
   reader.readAsDataURL(image);
+  //lecture terminée, file disponible en tant qu'URL dans l'objet FileReader
   reader.onloadend = function() {
 
 
-    // Append the image data to the FormData object
+    // regroupement des données du form dans un formData
     formData.append('image', image);
     formData.append('title', title);
     formData.append('category', category);
 
+    //envoi des données à l'API
     fetch('http://localhost:5678/api/works/', {
       method: 'POST',
       headers: {'Authorization':`Bearer ${token}`},
@@ -230,6 +232,7 @@ addPhoto.addEventListener('submit', (e) => {
 });
 
 //Ajout du preview de l'image ajoutée
+
 // Ajouter un écouteur d'événement "change" à l'élément input de type "file" 
 const inputAddImg = document.getElementById('input_add_img');
 inputAddImg.addEventListener('change', function() {
@@ -238,7 +241,8 @@ inputAddImg.addEventListener('change', function() {
 document.querySelector(".label-container").style.display="none";
 
 // ajout couleur de fond bouton valider 
-document.querySelector('.add_pic').style.background = '#1D6154';
+const btn_add_pic = document.querySelector('.add_pic');
+  btn_add_pic.style.background = '#1D6154';
 
   const imgPreview = document.querySelector('.img_preview');
   imgPreview.style.display="flex"
@@ -259,8 +263,9 @@ document.querySelector('.add_pic').style.background = '#1D6154';
     // Ajouter l'élément "img" à la div "img_preview"
     imgPreview.appendChild(imgPreviewContainer);
     imgPreviewContainer.appendChild(img);
-  }
 
+  }
+  
   if (file) {
     reader.readAsDataURL(file);
   }
