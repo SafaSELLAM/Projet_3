@@ -65,7 +65,7 @@ const openModal = function(e) {
     modal=null
     
 }
-//EMpêcher la fermeture de la modale lorsque l'on click à l'intérieur de celle-ci
+//Empêcher la fermeture de la modale lorsque l'on click à l'intérieur de celle-ci
 const stopPropagation = function (e){
     e.stopPropagation()
 }
