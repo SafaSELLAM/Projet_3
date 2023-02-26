@@ -1,10 +1,12 @@
+//Récupération du token et userIsLogin dans le localStorage
 const token = localStorage.getItem('token') ? localStorage.getItem('token') : false
 const userIsLogin = localStorage.getItem('userIsLogin') ? localStorage.getItem('userIsLogin') : false
 
+//Envoie requête fetch sur les travaux dans l'API, stock les données reçues dans la variable Works
 const reponse = await fetch ('http://localhost:5678/api/works');
 const works = await reponse.json();
 
-//récupération travaux 
+//récupération travaux , parcours chaque éléments du tableau "works"
 function get_gallery_data(works){
   works.forEach(card=>{
     build_main_gallery(card);
@@ -15,6 +17,7 @@ function get_gallery_data(works){
 }
 get_gallery_data(works); 
 
+//Build_main_gallery crée un élément figure et ajout une image et un titre
  function build_main_gallery(card){
 
 const gallery = document.querySelector(".gallery");
@@ -31,6 +34,7 @@ galleryElement.appendChild(imageElement);
 galleryElement.appendChild(captionElement);
 }
 
+// build_modal_gallery" crée un élément "figure" et y ajoute une image.
 function build_modal_gallery(card){
   const galleryModal = document.getElementById('gallery_modal');
   let figureModal = document.createElement('figure');
@@ -39,16 +43,21 @@ function build_modal_gallery(card){
   let imageModal = document.createElement('img');
   imageModal.classList.add('img_modal');
 
+  //ajout des boutons pour supprimer uneimage 
+
   let worksElements = document.createElement('div')
   worksElements.classList.add('action_Works_add')
   worksElements.innerHTML= `<button class="action-item hover-action-item"><i class="fa-solid fa-arrows-up-down-left-right"></i></button>
   <button class="action-item js_trash" data-id=${card.id}><i class="fa-regular fa-trash-can"></i></button> `
+
+  //ajout du titre des images
 
   let figacapModal = document.createElement('figcaption');
   imageModal.src=card.imageUrl;
   imageModal.setAttribute("crossorigin","anonymous");
   imageModal.alt = card.title;
   figacapModal.innerHTML=`éditer`;
+
   galleryModal.appendChild(figureModal);
   figureModal.appendChild(imageModal);
   figureModal.appendChild(worksElements);
@@ -63,12 +72,16 @@ const category = await reponse2.json();
 
 function genererCategory(category){
 
+  //création du bouton "tous" à part car non présent dans l'API
+
     const barreFiltre = document.querySelector(".filtres");
     const FiltreAll = document.createElement("button");
     FiltreAll.innerText="Tous";
     FiltreAll.classList.add("btn_filter");
     FiltreAll.dataset.id="";
     barreFiltre.appendChild(FiltreAll);
+
+    // création des autres boutons
 
     category.forEach(element=>{
 
@@ -85,6 +98,9 @@ genererCategory(category);
 //ajout filtres
 
 const boutonFiltre = document.querySelectorAll(".btn_filter");
+
+//ajout d'un evnmt click sur chaque bouton
+
 boutonFiltre.forEach(bouton=>bouton.addEventListener("click",event=>{
    const catId= event.target.dataset.id;
    if(catId === ""){
@@ -106,8 +122,9 @@ boutonFiltre.forEach(bouton=>bouton.addEventListener("click",event=>{
    }
 }))
 
-//Suppression travaux nouvelle fonction
+//Suppression travaux  fonction
 
+//ajouter des événements de suppression aux boutons de suppression d'images
 function init_delete_event(pictureElement){
   pictureElement.addEventListener('click',(e)=>{
     e.preventDefault();
@@ -131,6 +148,8 @@ function add_delete_event_on_btn(){
 });
 }
 add_delete_event_on_btn();
+
+// envoie requête DELETE au serveur local pour supprimer l'image sélectionnée. 
 
 function deletePicture(pictureId) {
   fetch(`http://localhost:5678/api/works/${pictureId}`, {
@@ -164,6 +183,7 @@ const labelAddImg = document.getElementById("label_add_img");
 labelAddImg.addEventListener("click", function() {
   document.getElementById("input_add_img").click();
 });
+
 addPhoto.addEventListener('submit', (e) => {
   e.preventDefault();
   const formData = new FormData();
@@ -218,8 +238,11 @@ addPhoto.addEventListener('submit', (e) => {
           const pictureElement= document.querySelector('button[data-id="'+card.id+'"]')
           init_delete_event(pictureElement);
         }
-        
+         
+        // réinitialisation image preview et données formulaire. 
+
         document.querySelector('.img_preview').innerHTML='';
+        document.querySelector('.add_pic').style.background = '#A7A7A7';
         form_add_photo.reset();
         document.querySelector(".label-container").style.display="block";
         document.getElementById("modal2").style.display="none";
@@ -241,16 +264,14 @@ inputAddImg.addEventListener('change', function() {
 document.querySelector(".label-container").style.display="none";
 
 // ajout couleur de fond bouton valider 
-const btn_add_pic = document.querySelector('.add_pic');
-  btn_add_pic.style.background = '#1D6154';
+ document.querySelector('.add_pic').style.background = '#1D6154';
+
 
   const imgPreview = document.querySelector('.img_preview');
   imgPreview.style.display="flex"
   const file = this.files[0];
   const reader = new FileReader();
 
-  // Réinitialiser la div "img_preview"
-  imgPreview.innerHTML = '';
   
   reader.onloadend = function() {
     // Créer un élément "img" et définir sa source en tant que l'image chargée ainsi que la div qui la contiendra
@@ -263,9 +284,7 @@ const btn_add_pic = document.querySelector('.add_pic');
     // Ajouter l'élément "img" à la div "img_preview"
     imgPreview.appendChild(imgPreviewContainer);
     imgPreviewContainer.appendChild(img);
-
   }
-  
   if (file) {
     reader.readAsDataURL(file);
   }

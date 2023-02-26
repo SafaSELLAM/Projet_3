@@ -7,6 +7,8 @@ const listUpdateElements = ['updateHeader', 'updateImg', 'updateInfo', 'updatePr
 const header_info = document.getElementById("header_info");
 const noFiltres = document.getElementById("Filtres");
 
+//Faire apparaitre la bannière modification travaux plus btn logout & annuler barre de filtre et login.  
+
 if(userIsLogin){
     logout_btn.style.display = "block";
     login_btn.style.display = "none";

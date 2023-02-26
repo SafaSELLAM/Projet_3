@@ -22,10 +22,13 @@ form.addEventListener("submit", async function(event) {
 
   if (response.ok) {
     const data = await response.json();
+    //récupération du token
     const token = data.token;
     
     localStorage.setItem("token", token);
     localStorage.setItem("userIsLogin", true);
+
+    //redirection sur la page en mode administrateur
 
     window.location.href = "index.html";
   } else {
